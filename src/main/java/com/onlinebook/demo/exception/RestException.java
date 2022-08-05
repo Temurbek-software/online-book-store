@@ -24,7 +24,8 @@ public class RestException extends RuntimeException {
     public RestException(String resourceName,
                          String fieldName,
                          Object fieldValue,
-                         String userMsg) {
+                         String userMsg)
+    {
         super(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue));
         this.userMsg = userMsg;
         this.resourceName = resourceName;
