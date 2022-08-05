@@ -1,23 +1,42 @@
 package com.onlinebook.demo.entity.template;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+
+import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
 @MappedSuperclass
-public abstract class BaseEntity
-{
+public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "is_deleted")
+    private boolean deleted = false;
+
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Objects.nonNull(this.createdAt) ?
+                this.createdAt : new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Objects.nonNull(this.updatedAt) ? this.updatedAt : new Date();
+    }
 
     @Override
     public boolean equals(Object o) {
