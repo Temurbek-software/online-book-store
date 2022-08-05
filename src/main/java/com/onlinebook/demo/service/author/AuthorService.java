@@ -7,6 +7,7 @@ import com.onlinebook.demo.payload.ProductDTO;
 
 import java.util.List;
 
+
 public interface AuthorService
 {
     ApiResult<List<AuthorDTO>> getAllAuthors();
