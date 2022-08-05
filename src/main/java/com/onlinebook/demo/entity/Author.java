@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -22,18 +23,23 @@ public class Author extends BaseEntity {
 
 
     @Column(name = "firstName")
+    @NotNull
     private String firstName;
 
     @Column(name = "lastName")
+    @NotNull
     private String lastName;
 
     @Column(name = "email")
+    @NotNull
     private String email;
 
     @Column(name = "phoneNumber")
+    @NotNull
     private String phoneNumber;
 
-    @Column(name = "About")
+    @Column(name = "description")
+    @NotNull
     private String description;
 
     @ManyToMany(mappedBy = "productAuthors")
