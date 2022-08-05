@@ -79,29 +79,4 @@ public class ProductServiceImpl implements ProductService {
             return new ApiResult<>("This product does not exist");
         }
     }
-
-
-//    public List<ProductDTO> getAllProduct() {
-//        List<Product> products = productRepository.findAll();
-//        List<ProductDTO> productDTOList = products.stream()
-//                .map(per -> converting(per))
-//                .collect(Collectors.toList());
-//        return productDTOList;
-//    }
-
-//    public ProductDTO getOne(Long productDTOid) {
-//        Product product = productRepository.getById(productDTOid);
-//        return converting(product);
-//    }
-//
-//    public ProductDTO saveProducts(ProductDTO productDTO) {
-//        productRepository.save(reverseConverting(productDTO));
-//        return productDTO;
-//    }
-
-//    public void deleteProduct(Long id) {
-//        productRepository.deleteById(id);
-//    }
-
-
 }
