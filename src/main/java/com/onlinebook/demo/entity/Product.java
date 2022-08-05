@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,30 +21,39 @@ import java.util.UUID;
 public class Product extends BaseEntity {
     //    @NotBlank(message = "Name is mandatory")
     @Column(name = "book_name")
+    @NotNull
     private String bookName;
 
     @Column(name = "electronic_price")
+    @NotNull
     private Double e_price;
 
     @Column(name = "printed_price")
+    @NotNull
     private Double printed_Price;
 
     @Column(name = "audio_price")
+    @NotNull
     private Double audio_price;
 
     @Column(name = "yearOfPublished")
+    @NotNull
     private Date yearOfPublished;
 
     @Column(name = "pageNumber")
+    @NotNull
     private Integer pageNumb;
 
     @Column(name = "description")
+    @NotNull
     private String description;
 
     @Column(name = "Language")
+    @NotNull
     private String language;
 
     @Column(name = "ISBNnumber")
+    @NotNull
     private String isbnNumber;
 
 
@@ -52,6 +62,13 @@ public class Product extends BaseEntity {
             insertable = false,
             updatable = false)
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "company_id", referencedColumnName = "id",
+            insertable = false,
+            updatable = false)
+    private Company company;
 
     @ManyToMany
     @JoinTable(
