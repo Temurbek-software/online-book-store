@@ -1,9 +1,11 @@
 package com.onlinebook.demo.service.roleservices;
 
 import com.onlinebook.demo.entity.Author;
+import com.onlinebook.demo.entity.Company;
 import com.onlinebook.demo.entity.Product;
 import com.onlinebook.demo.entity.Publisher;
 import com.onlinebook.demo.payload.AuthorDTO;
+import com.onlinebook.demo.payload.CompanyDTO;
 import com.onlinebook.demo.payload.ProductDTO;
 import com.onlinebook.demo.payload.PublisherDTO;
 import lombok.RequiredArgsConstructor;
@@ -91,6 +93,33 @@ public class ConverterToImpl implements ConverterTo {
                 publisher.getEstablished_year(),
                 publisher.getDescription(),
                 publisher.getProductSet()
+        );
+    }
+
+    @Override
+    public Company toCompany(CompanyDTO companyDTO) {
+        return new Company(
+                companyDTO.getNameOfCompany(),
+                companyDTO.getAddress(),
+                companyDTO.getPhoneNumber(),
+                companyDTO.getEmail(),
+                companyDTO.getYearOfPublished(),
+                companyDTO.getDescription(),
+                companyDTO.getProductSet()
+        );
+    }
+
+    @Override
+    public CompanyDTO COMPANY_DTO(Company company) {
+        return new CompanyDTO(
+                company.getId(),
+                company.getNameOfCompany(),
+                company.getAddress(),
+                company.getPhoneNumber(),
+                company.getEmail(),
+                company.getYearOfPublished(),
+                company.getDescription(),
+                company.getProduct_Id()
         );
     }
 }
