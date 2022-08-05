@@ -6,10 +6,7 @@ import com.onlinebook.demo.payload.AuthorDTO;
 import com.onlinebook.demo.service.author.AuthorService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,10 +23,15 @@ public class AuthorController
         return apiResult;
     }
 
-    @GetMapping("/all/{id}")
+    @GetMapping("/{id}")
     public ApiResult<AuthorDTO> getOnAuthor(@PathVariable Long id) {
         ApiResult<AuthorDTO> dtoApiResult = authorService.getoneAuthor(id);
         return dtoApiResult;
     }
-
+    @PostMapping("/insertAuther")
+    public ApiResult<?> saveAuthors(@RequestBody AuthorDTO authorDTO)
+    {
+       ApiResult<String> saveAuthor=authorService.saveAuthor(authorDTO);
+       return saveAuthor;
+    }
 }
