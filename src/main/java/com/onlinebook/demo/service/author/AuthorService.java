@@ -10,9 +10,13 @@ import java.util.List;
 
 public interface AuthorService
 {
-    ApiResult<List<AuthorDTO>> getAllAuthors();
-    ApiResult<AuthorDTO> getoneAuthor(Long id);
-    ApiResult<String> saveAuthor(AuthorDTO authorDTO);
-    ApiResult<?> deleteAuthor(Long id);
-    ApiResult<String> updatingAuhtor(Long id,AuthorDTO authorDTO);
+    ApiResult<List<AuthorDTO>> ListOfAllAuthors();
+    ApiResult<AuthorDTO> getAuthorById(Long id);
+    ApiResult<String> insertNewAuthor(AuthorDTO authorDTO);
+    ApiResult<?> deleteAuthorById(Long id);
+    ApiResult<String> updatingAuthorById(Long id,AuthorDTO authorDTO);
+
+    Author mapToAuthorDTO(AuthorDTO authorDTO);
+    AuthorDTO mapToAuthor(Author author);
+
 }

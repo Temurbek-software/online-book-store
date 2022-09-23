@@ -2,10 +2,7 @@ package com.onlinebook.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onlinebook.demo.entity.template.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "publisher")
 public class Publisher extends BaseEntity {
 
@@ -54,7 +52,8 @@ public class Publisher extends BaseEntity {
                      Integer phoneNumber,
                      String email,
                      Date established_year,
-                     String description) {
+                     String description)
+    {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;

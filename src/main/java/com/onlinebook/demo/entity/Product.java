@@ -1,16 +1,17 @@
 package com.onlinebook.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onlinebook.demo.entity.template.BaseEntity;
+import com.onlinebook.demo.payload.AuthorDTO;
+import com.onlinebook.demo.payload.ProductDTO;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -18,8 +19,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "product")
 @Entity
+@Builder
 public class Product extends BaseEntity {
-    //    @NotBlank(message = "Name is mandatory")
+
     @Column(name = "book_name")
     @NotNull
     private String bookName;
@@ -56,11 +58,11 @@ public class Product extends BaseEntity {
     @NotNull
     private String isbnNumber;
 
-
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id",
             insertable = false,
             updatable = false)
+    @JsonIgnore
     private Category category;
 
     @ManyToOne
@@ -68,21 +70,25 @@ public class Product extends BaseEntity {
             name = "company_id", referencedColumnName = "id",
             insertable = false,
             updatable = false)
+    @JsonIgnore
     private Company company;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,CascadeType.MERGE
+            })
     @JoinTable(
             name = "product_author",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     @JsonIgnore
-    private Set<Author> productAuthors = new HashSet<>();
-
+    private Set<Author> productAuthors=new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "publisher_id", insertable = false, updatable = false)
     @JsonIgnore
     private Publisher publisher;
+
 
     public Product(String bookName,
                    Double e_price,

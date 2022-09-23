@@ -2,10 +2,8 @@ package com.onlinebook.demo.entity;
 
 
 import com.onlinebook.demo.entity.template.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.onlinebook.demo.payload.CompanyDTO;
+import lombok.*;
 import org.hibernate.annotations.CollectionId;
 
 import javax.persistence.*;
@@ -48,4 +46,14 @@ public class Company extends BaseEntity
 
    @OneToMany(mappedBy = "company")
    private Set<Product> product_Id=new HashSet<>();
+
+   public Company(CompanyDTO companyDTO)
+   {
+    this.nameOfCompany=companyDTO.getNameOfCompany();
+    this.address=companyDTO.getAddress();
+    this.phoneNumber=companyDTO.getPhoneNumber();
+    this.email=companyDTO.getEmail();
+    this.yearOfPublished=companyDTO.getYearOfPublished();
+    this.description=companyDTO.getDescription();
+   }
 }

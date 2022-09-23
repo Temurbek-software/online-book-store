@@ -4,34 +4,31 @@ import com.onlinebook.demo.entity.Company;
 import com.onlinebook.demo.payload.ApiResult;
 import com.onlinebook.demo.payload.CompanyDTO;
 import com.onlinebook.demo.repository.CompanyRepository;
-import com.onlinebook.demo.service.roleservices.ConverterTo;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyServiceImpl implements CompanyService {
+public class CompanyServiceImpl implements CompanyService
+{
     private final CompanyRepository companyRepository;
-    private ConverterTo converterTo;
 
     @Override
     public ApiResult<List<CompanyDTO>> getAllCompanyInfo() {
         List<Company> companies = companyRepository.findAll();
-        List<CompanyDTO> companyDTOS = companies.stream().map(s -> converterTo
-                .COMPANY_DTO(s)).collect(Collectors.toList());
+        List<CompanyDTO> companyDTOS = companies.stream().map(CompanyDTO::new)
+                .collect(Collectors.toList());
         return ApiResult.successResponse(companyDTOS);
     }
 
     @Override
     public ApiResult<CompanyDTO> getOneCompany(long id) {
         Company company = companyRepository.getById(id);
-        return ApiResult.successResponse(converterTo.COMPANY_DTO(company));
+        CompanyDTO companyDTO=new CompanyDTO(company);
+        return ApiResult.successResponse(companyDTO);
     }
 
     @Override
@@ -39,13 +36,15 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = companyRepository.getById(id);
         company.setDeleted(true);
         companyRepository.save(company);
-        return ApiResult.successResponse(converterTo.COMPANY_DTO(company));
+        CompanyDTO companyDTO=new CompanyDTO(company);
+        return ApiResult.successResponse(companyDTO);
     }
 
     @Override
-    public ApiResult<?> saveCo0mpany(CompanyDTO companyDTO)
+    public ApiResult<?> saveCompany(CompanyDTO companyDTO)
     {
-        Company company=converterTo.toCompany(companyDTO);
+
+        Company company=new Company(companyDTO);
         companyRepository.save(company);
         return ApiResult.successResponse(companyDTO);
     }
@@ -61,4 +60,7 @@ public class CompanyServiceImpl implements CompanyService {
         company.setDescription(companyDTO.getDescription());
         return ApiResult.successResponse(company,true);
     }
+
+
+
 }

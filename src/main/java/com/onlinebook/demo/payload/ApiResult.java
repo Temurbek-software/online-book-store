@@ -63,12 +63,17 @@ public class ApiResult<T>
         return new ApiResult<>(data, true);
     }
 
-    public static <E> ApiResult<E> successResponse(E data, boolean notMessage) {
+    public static <E> ApiResult<E> successResponse(E data, boolean message)
+    {
         return new ApiResult<>(data, true);
     }
 
     public static <E> ApiResult<E> successResponse(E data, String message) {
         return new ApiResult<>(data, true, message);
+    }
+
+    public static <E> ApiResult<E> unsuccessResponse() {
+        return new ApiResult<>(false);
     }
 
     public static <E> ApiResult<E> successResponse() {
@@ -79,11 +84,11 @@ public class ApiResult<T>
         return new ApiResult<>(message);
     }
 
-    public static <E> ApiResult<E> successResponse(List<ErrorData> errors) {
+    public static <E> ApiResult<E> errorResponse(List<ErrorData> errors) {
         return new ApiResult<>(errors);
     }
 
-    public static <E> ApiResult<E> successResponse(String errorMsg,Integer errorcode)
+    public static <E> ApiResult<E> errorResponse(String errorMsg,Integer errorcode)
     {
         return new ApiResult<>(errorMsg,errorcode);
     }

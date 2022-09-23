@@ -8,8 +8,11 @@ import java.util.List;
 
 public interface ProductService {
    ApiResult<List<ProductDTO>> getAllProduct();
-   ApiResult<ProductDTO> getoneItem(Long id);
-   ApiResult<String> savePro(ProductDTO productDTO);
+   ApiResult<ProductDTO> getOneItem(Long id);
+   ApiResult<String> saveNewProduct(ProductDTO productDTO);
    ApiResult<?> deleteProduct(Long id);
-   ApiResult<String> updating(Long id,ProductDTO productDTO);
+   ApiResult<String> updateExistProduct(Long id,ProductDTO productDTO);
+   Product mapToProduct(ProductDTO productDTO);
+   ProductDTO mapToProductDTO(Product product);
+
 }

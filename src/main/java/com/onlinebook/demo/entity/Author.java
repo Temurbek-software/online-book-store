@@ -1,27 +1,23 @@
 package com.onlinebook.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onlinebook.demo.entity.template.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
+//@ToString
 @NoArgsConstructor
-@Entity
 @AllArgsConstructor
-@Table(name = "author")
-public class Author extends BaseEntity {
-
-
+@Builder
+@Entity(name = "author")
+public class Author extends BaseEntity
+{
     @Column(name = "firstName")
     @NotNull
     private String firstName;
@@ -42,18 +38,10 @@ public class Author extends BaseEntity {
     @NotNull
     private String description;
 
-    @ManyToMany(mappedBy = "productAuthors")
+    @ManyToMany(mappedBy = "productAuthors",fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST
+            })
     @JsonIgnore
-    private Set<Product> productSet = new HashSet<>();
-
-    public Author(String firstName, String lastName,
-                  String email, String phoneNumber,
-                  String description) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.description = description;
-    }
-
+    private Set<Product> productSet=new HashSet<>();
 }

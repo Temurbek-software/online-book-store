@@ -1,14 +1,10 @@
 package com.onlinebook.demo.service.publisher;
 
 
-import com.onlinebook.demo.entity.Product;
 import com.onlinebook.demo.entity.Publisher;
 import com.onlinebook.demo.payload.ApiResult;
-import com.onlinebook.demo.payload.ProductDTO;
 import com.onlinebook.demo.payload.PublisherDTO;
 import com.onlinebook.demo.repository.PublisherRepository;
-import com.onlinebook.demo.service.roleservices.ConverterTo;
-import jdk.dynalink.linker.ConversionComparator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,39 +14,67 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PublisherServiceImpl implements PublisherService {
-    private final ConverterTo converterTo;
     private final PublisherRepository publisherRepository;
+
+    @Override
+    public Publisher mapToPublisher(PublisherDTO publisherDTO) {
+        if (publisherDTO == null) {
+            return null;
+        }
+        Publisher publisher = new Publisher();
+        publisher.setName(publisherDTO.getName());
+        publisher.setAddress(publisherDTO.getAddress());
+        publisher.setDescription(publisher.getDescription());
+        publisher.setPhoneNumber(publisherDTO.getPhoneNumber());
+        publisher.setEmail(publisherDTO.getEmail());
+        publisher.setEstablished_year(publisherDTO.getEstablished_year());
+        return publisher;
+    }
+
+    @Override
+    public PublisherDTO mapToPublisherDTO(Publisher publisher) {
+        if (publisher == null) {
+            return null;
+        }
+        PublisherDTO publisherDTO = new PublisherDTO();
+        publisherDTO.setId(publisher.getId());
+        publisherDTO.setDescription(publisher.getDescription());
+        publisherDTO.setAddress(publisher.getAddress());
+        publisherDTO.setEmail(publisher.getEmail());
+        publisherDTO.setName(publisher.getName());
+        publisherDTO.setPhoneNumber(publisher.getPhoneNumber());
+        publisherDTO.setEstablished_year(publisher.getEstablished_year());
+        return publisherDTO;
+    }
 
     @Override
     public ApiResult<List<PublisherDTO>> getAllPublisher() {
         List<Publisher> publishers = publisherRepository.findAll();
         List<PublisherDTO> publisherDTOS = publishers.stream()
-                .map(per -> converterTo.toPublisherDTO(per))
+                .map(PublisherDTO::new)
                 .collect(Collectors.toList());
         return ApiResult.successResponse(publisherDTOS);
     }
 
     @Override
-    public ApiResult<PublisherDTO> getonePublisher(Long id) {
+    public ApiResult<PublisherDTO> getOnePublisher(Long id) {
         Publisher publisher = publisherRepository.getById(id);
-        return ApiResult.successResponse(converterTo.toPublisherDTO(publisher));
+        PublisherDTO publisherDTO= new PublisherDTO(publisher);
+        return ApiResult.successResponse(publisherDTO);
     }
 
     @Override
     public ApiResult<String> savePublisher(PublisherDTO publisherDTO) {
-        Publisher publisher=converterTo.toPublisher(publisherDTO);
+        Publisher publisher = mapToPublisher(publisherDTO);
         publisherRepository.save(publisher);
         return ApiResult.successResponse("Successfully saved");
     }
 
     @Override
     public ApiResult<?> deletePublisher(Long id) {
-        if (publisherRepository.getOne(id)==null)
-        {
+        if (publisherRepository.getOne(id) == null) {
             return ApiResult.successResponse("Not exist");
-        }
-        else
-        {
+        } else {
             publisherRepository.deleteById(id);
             return ApiResult.successResponse("Successfuly deleted");
         }
@@ -58,10 +82,9 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public ApiResult<String> updatingPublisher(Long id, PublisherDTO publisherDTO) {
-        Publisher optionalPublisher=publisherRepository.findById(id).get();
-        Publisher publisher=converterTo.toPublisher(publisherDTO);
-        if (!(publisher==null))
-        {
+        Publisher optionalPublisher = publisherRepository.findById(id).get();
+        Publisher publisher = mapToPublisher(publisherDTO);
+        if (!(publisher == null)) {
             optionalPublisher.setName(publisher.getName());
             optionalPublisher.setDescription(publisher.getDescription());
             optionalPublisher.setAddress(publisher.getAddress());
@@ -70,10 +93,10 @@ public class PublisherServiceImpl implements PublisherService {
             optionalPublisher.setPhoneNumber(publisher.getPhoneNumber());
             publisherRepository.save(optionalPublisher);
             return new ApiResult<>("This publisher has succesfully saved");
-        }
-        else
-        {
+        } else {
             return new ApiResult<>("This publisher does not exist");
         }
     }
+
+
 }

@@ -22,7 +22,7 @@ public class CompanyController
 
     @PostMapping("/save")
     public ApiResult<String> saveCompany(CompanyDTO companyDTO) {
-        return (ApiResult<String>) companyService.saveCo0mpany(companyDTO);
+        return (ApiResult<String>) companyService.saveCompany(companyDTO);
     }
 
     @GetMapping("/{id}")
@@ -31,7 +31,8 @@ public class CompanyController
     }
 
     @PutMapping("/{id}")
-    public ApiResult<?> updateCompany(@PathVariable long id, @RequestBody CompanyDTO companyDTO)
+    public ApiResult<?> updateCompany(@PathVariable long id,
+                                      @RequestBody CompanyDTO companyDTO)
     {
        return  companyService.changeCompany(companyDTO, id);
     }

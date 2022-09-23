@@ -14,7 +14,6 @@ import java.util.List;
 public class RestException extends RuntimeException {
     private String userMsg;
     private HttpStatus status;
-
     private String resourceName;
     private String fieldName;
     private Object fieldValue;
@@ -26,7 +25,9 @@ public class RestException extends RuntimeException {
                          Object fieldValue,
                          String userMsg)
     {
-        super(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue));
+        super(String.format("%s not found with %s : '%s'", resourceName,
+                fieldName,
+                fieldValue));
         this.userMsg = userMsg;
         this.resourceName = resourceName;
         this.fieldName = fieldName;
@@ -44,7 +45,8 @@ public class RestException extends RuntimeException {
 
     private RestException(String userMsg,
                           int errorCode,
-                          HttpStatus status) {
+                          HttpStatus status)
+    {
         super(userMsg);
         this.userMsg = userMsg;
         this.status = status;

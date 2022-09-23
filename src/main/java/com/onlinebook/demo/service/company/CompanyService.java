@@ -10,6 +10,7 @@ public interface CompanyService {
     ApiResult<List<CompanyDTO>> getAllCompanyInfo();
     ApiResult<CompanyDTO> getOneCompany(long id);
     ApiResult<?> deleteCompanyById(long id);
-    ApiResult<?> saveCo0mpany(CompanyDTO companyDTO);
+    ApiResult<?> saveCompany(CompanyDTO companyDTO);
     ApiResult<?> changeCompany(CompanyDTO companyDTO,long id);
+
 }

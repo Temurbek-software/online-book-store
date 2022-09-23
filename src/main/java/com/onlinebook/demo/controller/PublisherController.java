@@ -26,7 +26,7 @@ public class PublisherController {
 
     @GetMapping("/{id}")
     public ApiResult<PublisherDTO> getOnPublisher(@PathVariable Long id) {
-        ApiResult<PublisherDTO> dtoApiResult = publisherService.getonePublisher(id);
+        ApiResult<PublisherDTO> dtoApiResult = publisherService.getOnePublisher(id);
         return dtoApiResult;
     }
 }
