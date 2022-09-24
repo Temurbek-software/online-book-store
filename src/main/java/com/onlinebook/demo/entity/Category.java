@@ -1,5 +1,6 @@
 package com.onlinebook.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onlinebook.demo.entity.template.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +14,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "category")
 public class Category  extends BaseEntity
@@ -24,6 +25,7 @@ public class Category  extends BaseEntity
     private String name;
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private Set<Product> product=new HashSet<>();
 
     @Column(name = "description")
