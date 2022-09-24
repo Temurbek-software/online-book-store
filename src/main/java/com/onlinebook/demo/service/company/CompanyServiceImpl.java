@@ -17,9 +17,26 @@ public class CompanyServiceImpl implements CompanyService
     private final CompanyRepository companyRepository;
 
     @Override
+    public Company mapToCompany(CompanyDTO companyDTO) {
+       if (companyDTO==null)
+       {
+           return null;
+       }
+       Company company= new Company();
+       company.setNameOfCompany(companyDTO.getNameOfCompany());
+       company.setAddress(companyDTO.getAddress());
+       company.setDescription(companyDTO.getDescription());
+       company.setEmail(companyDTO.getEmail());
+       company.setPhoneNumber(companyDTO.getPhoneNumber());
+       company.setYearOfPublished(companyDTO.getYearOfPublished());
+       return company;
+    }
+
+    @Override
     public ApiResult<List<CompanyDTO>> getAllCompanyInfo() {
         List<Company> companies = companyRepository.findAll();
-        List<CompanyDTO> companyDTOS = companies.stream().map(CompanyDTO::new)
+        List<CompanyDTO> companyDTOS = companies
+                .stream().map(CompanyDTO::new)
                 .collect(Collectors.toList());
         return ApiResult.successResponse(companyDTOS);
     }
