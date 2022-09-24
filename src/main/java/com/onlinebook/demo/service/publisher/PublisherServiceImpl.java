@@ -32,22 +32,6 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public PublisherDTO mapToPublisherDTO(Publisher publisher) {
-        if (publisher == null) {
-            return null;
-        }
-        PublisherDTO publisherDTO = new PublisherDTO();
-        publisherDTO.setId(publisher.getId());
-        publisherDTO.setDescription(publisher.getDescription());
-        publisherDTO.setAddress(publisher.getAddress());
-        publisherDTO.setEmail(publisher.getEmail());
-        publisherDTO.setName(publisher.getName());
-        publisherDTO.setPhoneNumber(publisher.getPhoneNumber());
-        publisherDTO.setEstablished_year(publisher.getEstablished_year());
-        return publisherDTO;
-    }
-
-    @Override
     public ApiResult<List<PublisherDTO>> getAllPublisher() {
         List<Publisher> publishers = publisherRepository.findAll();
         List<PublisherDTO> publisherDTOS = publishers.stream()
