@@ -36,6 +36,7 @@ public class PublisherDTO implements Serializable {
     private Set<ProductDTO> productSet;
 
     public PublisherDTO(Publisher publisher) {
+        AuthorDTO authorDTO=new AuthorDTO();
         this.id = publisher.getId();
         this.name = publisher.getName();
         this.address = publisher.getAddress();
@@ -45,7 +46,24 @@ public class PublisherDTO implements Serializable {
         this.description = publisher.getDescription();
         this.createdAt=publisher.getCreatedAt();
         this.updatedAt=publisher.getUpdatedAt();
-        this.productSet=publisher.getProductSet()
-                .stream().map(ProductDTO::new).collect(Collectors.toSet());
+        this.productSet=authorDTO.getProductDTO(publisher.getProductSet());
+    }
+
+    public PublisherDTO(Long id, String name,
+                        String address,
+                        Integer phoneNumber,
+                        String email, Date established_year,
+                        String description, boolean deleted,
+                        Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.established_year = established_year;
+        this.description = description;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }
