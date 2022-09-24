@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
     public ApiResult<List<ProductDTO>> getAllProduct() {
         List<Product> products = productRepository.findAll();
         List<ProductDTO> productDTOList = products.stream()
-                .map(this::mapToProductDTO)
+                .map(ProductDTO::new)
                 .collect(Collectors.toList());
         return ApiResult.successResponse(productDTOList);
     }
