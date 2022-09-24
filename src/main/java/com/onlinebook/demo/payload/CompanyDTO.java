@@ -31,6 +31,7 @@ public class CompanyDTO {
     private Date updatedAt;
 
     public CompanyDTO(Company company) {
+        AuthorDTO authorDTO= new AuthorDTO();
         this.id = company.getId();
         this.nameOfCompany = company.getNameOfCompany();
         this.address = company.getAddress();
@@ -38,11 +39,28 @@ public class CompanyDTO {
         this.email = company.getEmail();
         this.yearOfPublished = company.getYearOfPublished();
         this.description = company.getDescription();
-        this.productSet = company.getProduct_Id()
-                .stream().map(ProductDTO::new)
-                .collect(Collectors.toSet());
+        this.productSet = authorDTO.getProductDTO(company.getProduct_Id());
         this.deleted = company.isDeleted();
         this.createdAt = company.getCreatedAt();
         this.updatedAt = company.getUpdatedAt();
+    }
+
+    public CompanyDTO(Long id, String nameOfCompany,
+                      String address,
+                      String phoneNumber,
+                      String email, Date yearOfPublished,
+                      String description, boolean deleted,
+                      Date createdAt, Date updatedAt)
+    {
+        this.id = id;
+        this.nameOfCompany = nameOfCompany;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.yearOfPublished = yearOfPublished;
+        this.description = description;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }
