@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorServiceImpl implements AuthorService {
+public class AuthorServiceImpl implements AuthorService
+{
     private final AuthorRepository authorRepository;
-
     @Override
     public Author mapToAuthorDTO(AuthorDTO authorDTO) {
         if (authorDTO == null) {
@@ -35,29 +35,13 @@ public class AuthorServiceImpl implements AuthorService {
         return author;
     }
 
-    @Override
-    public AuthorDTO mapToAuthor(Author author) {
-        if (author == null) {
-            return null;
-        }
-        AuthorDTO authorDTO = new AuthorDTO();
-        authorDTO.setId(author.getId());
-        authorDTO.setFirstName(author.getFirstName());
-        authorDTO.setLastName(author.getLastName());
-        authorDTO.setDescription(author.getDescription());
-        authorDTO.setEmail(author.getEmail());
-        authorDTO.setPhoneNumber(author.getPhoneNumber());
-        authorDTO.setProductSet(author.getProductSet().stream()
-                .map(ProductDTO::new).collect(Collectors.toSet()));
-        return authorDTO;
-    }
 
     @Override
     public ApiResult<List<AuthorDTO>> ListOfAllAuthors() {
         List<Author> authors = authorRepository.findAll();
         List<AuthorDTO> authorDTOS = authors
                 .stream()
-                .map(this::mapToAuthor)
+                .map(AuthorDTO::new)
                 .collect(Collectors.toList());
         return ApiResult.successResponse(authorDTOS);
     }
@@ -66,7 +50,7 @@ public class AuthorServiceImpl implements AuthorService {
     public ApiResult<AuthorDTO> getAuthorById(Long id) {
         try {
             Author author = authorRepository.getById(id);
-            AuthorDTO authorDTO = mapToAuthor(author);
+            AuthorDTO authorDTO = new AuthorDTO(author);
             return ApiResult.successResponse(authorDTO,
                     MessageService.getMessage("AUTHOR_FOUND"));
         } catch (EntityNotFoundException exception) {
@@ -162,7 +146,6 @@ public class AuthorServiceImpl implements AuthorService {
                         .append(strings[3] + " exist");
                 break;
             default:
-//                authorRepository.save(author);
                 outcome = true;
 
         }
