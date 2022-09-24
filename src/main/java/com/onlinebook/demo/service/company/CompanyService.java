@@ -13,4 +13,6 @@ public interface CompanyService {
     ApiResult<?> saveCompany(CompanyDTO companyDTO);
     ApiResult<?> changeCompany(CompanyDTO companyDTO,long id);
 
+    Company mapToCompany(CompanyDTO companyDTO);
+
 }
