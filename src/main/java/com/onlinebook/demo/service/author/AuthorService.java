@@ -17,6 +17,6 @@ public interface AuthorService
     ApiResult<String> updatingAuthorById(Long id,AuthorDTO authorDTO);
 
     Author mapToAuthorDTO(AuthorDTO authorDTO);
-    AuthorDTO mapToAuthor(Author author);
+
 
 }
