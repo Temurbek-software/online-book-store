@@ -14,5 +14,5 @@ public interface PublisherService {
     ApiResult<?> deletePublisher(Long id);
     ApiResult<String> updatingPublisher(Long id,PublisherDTO publisherDTO);
     Publisher mapToPublisher(PublisherDTO publisherDTO);
-    PublisherDTO mapToPublisherDTO(Publisher publisher);
+
 }
