@@ -32,25 +32,6 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getIsbnNumber());
     }
 
-    @Override
-    public ProductDTO mapToProductDTO(Product product) {
-        if (product == null) {
-            return null;
-        }
-        ProductDTO productDTO=new ProductDTO();
-        productDTO.setId(product.getId());
-        productDTO.setBookName(product.getBookName());
-        productDTO.setDescription(product.getDescription());
-        productDTO.setAudio_price(product.getAudio_price());
-        productDTO.setE_price(product.getE_price());
-        productDTO.setLanguage(product.getLanguage());
-        productDTO.setPrinted_Price(productDTO.getPrinted_Price());
-        productDTO.setYearOfPublished(product.getYearOfPublished());
-        productDTO.setPageNumb(product.getPageNumb());
-        productDTO.setIsbnNumber(product.getIsbnNumber());
-
-        return productDTO;
-    }
 
     @Override
     public ApiResult<List<ProductDTO>> getAllProduct() {
@@ -65,13 +46,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ApiResult<ProductDTO> getOneItem(Long id) {
         Product product = productRepository.getById(id);
-        return ApiResult.successResponse(mapToProductDTO(product));
+        ProductDTO productDTO = new ProductDTO(product);
+        return ApiResult.successResponse(productDTO);
     }
 
     @Override
     public ApiResult<String> saveNewProduct(ProductDTO productDTO) {
         Product product = mapToProduct(productDTO);
         productRepository.save(product);
+
         return ApiResult.successResponse("Successfully saved");
     }
 
@@ -102,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(optionalProduct);
             return new ApiResult<>("This product has succesfully saved");
         } else {
-            return new ApiResult<>("This product does not exist");
+            return new ApiResult<>("This product does not ex\n" +
+                    "    }ist");
         }
-    }
 }
