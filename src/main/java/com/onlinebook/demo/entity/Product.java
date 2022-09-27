@@ -109,4 +109,8 @@ public class Product extends BaseEntity {
         this.language = language;
         this.isbnNumber = isbnNumber;
     }
+    public void addProductAuthors(Author author)
+    {
+        this.productAuthors.add(author);
+    }
 }
