@@ -42,10 +42,7 @@ public class ProductDTO {
     private boolean deleted;
     private Date createdAt;
     private Date updatedAt;
-
-
     private Set<AuthorDTO> authors;
-
     private CategoryDTO category;
     private PublisherDTO publisher;
     private CompanyDTO company;
