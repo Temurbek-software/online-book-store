@@ -13,6 +13,6 @@ public interface ProductService {
    ApiResult<?> deleteProduct(Long id);
    ApiResult<String> updateExistProduct(Long id,ProductDTO productDTO);
    Product mapToProduct(ProductDTO productDTO);
-   ProductDTO mapToProductDTO(Product product);
+
 
 }
