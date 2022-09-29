@@ -10,10 +10,11 @@ import java.util.Objects;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class BaseEntity
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @Column(name = "is_deleted")
     private boolean deleted = false;
@@ -48,4 +49,5 @@ public abstract class BaseEntity {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

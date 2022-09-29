@@ -44,4 +44,9 @@ public class Author extends BaseEntity
             })
     @JsonIgnore
     private Set<Product> productSet=new HashSet<>();
+
+    public Author(Long id)
+    {
+        this.id=id;
+    }
 }

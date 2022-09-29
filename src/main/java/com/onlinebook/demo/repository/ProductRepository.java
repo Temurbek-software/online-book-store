@@ -19,8 +19,10 @@ public interface ProductRepository extends JpaRepository<Product, Long>
 
     @Query(value = "select * from product s where s.is_deleted=:true", nativeQuery = true)
     List<ProductDTO> getAllProductsIfDeleted();
-    @Transactional
-    @Modifying
-    @Query(value = "",nativeQuery = true)
-    void insertNewProduct(@Param("newProduct") ProductDTO productDTO);
+
+//    @Transactional
+//    @Modifying
+//    @Query(value = "",nativeQuery = true)
+//    void insertNewProduct(@Param("newProduct") ProductDTO productDTO);
+
 }

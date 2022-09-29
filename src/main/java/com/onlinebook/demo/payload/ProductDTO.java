@@ -39,7 +39,7 @@ public class ProductDTO {
 
     private String isbnNumber;
 
-    private boolean deleted;
+    private boolean deleted ;
     private Date createdAt;
     private Date updatedAt;
     private Set<AuthorDTO> authors;
@@ -69,7 +69,8 @@ public class ProductDTO {
         this.updatedAt = updatedAt;
     }
 
-    public ProductDTO(Product product) {
+    public ProductDTO(Product product)
+    {
         this.id = product.getId();
         this.bookName = product.getBookName();
         this.e_price = product.getE_price();

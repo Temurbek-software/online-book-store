@@ -1,13 +1,17 @@
 package com.onlinebook.demo.service.products;
 
-import com.onlinebook.demo.entity.Product;
+import com.onlinebook.demo.entity.*;
 import com.onlinebook.demo.payload.ApiResult;
+import com.onlinebook.demo.payload.AuthorDTO;
+import com.onlinebook.demo.payload.CategoryDTO;
 import com.onlinebook.demo.payload.ProductDTO;
 import com.onlinebook.demo.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,11 +31,23 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getAudio_price(),
                 productDTO.getYearOfPublished(),
                 productDTO.getPageNumb(),
-                productDTO.getLanguage(),
                 productDTO.getDescription(),
-                productDTO.getIsbnNumber());
+                productDTO.getLanguage(),
+                productDTO.getIsbnNumber(),
+                new Category(productDTO.getCategory().getId()),
+                new Company(productDTO.getCategory().getId()),
+                getAuthorDTOS(productDTO.getAuthors()),
+                new Publisher(productDTO.getPublisher().getId()));
     }
 
+    public Set<Author> getAuthorDTOS(Set<AuthorDTO> authorDTOS) {
+        Set<Author> authors = new HashSet<>();
+        for (AuthorDTO authorDTO : authorDTOS) {
+            Author author = new Author(authorDTO.getId());
+            authors.add(author);
+        }
+        return authors;
+    }
 
     @Override
     public ApiResult<List<ProductDTO>> getAllProduct() {
@@ -54,7 +70,6 @@ public class ProductServiceImpl implements ProductService {
     public ApiResult<String> saveNewProduct(ProductDTO productDTO) {
         Product product = mapToProduct(productDTO);
         productRepository.save(product);
-
         return ApiResult.successResponse("Successfully saved");
     }
 
@@ -88,4 +103,5 @@ public class ProductServiceImpl implements ProductService {
             return new ApiResult<>("This product does not ex\n" +
                     "    }ist");
         }
+    }
 }

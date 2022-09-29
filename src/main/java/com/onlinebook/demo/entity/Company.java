@@ -47,7 +47,11 @@ public class Company extends BaseEntity
    @OneToMany(mappedBy = "company")
    private Set<Product> product_Id=new HashSet<>();
 
-   public Company(CompanyDTO companyDTO)
+    public Company(Long id) {
+        this.id=id;
+    }
+
+    public Company(CompanyDTO companyDTO)
    {
     this.nameOfCompany=companyDTO.getNameOfCompany();
     this.address=companyDTO.getAddress();

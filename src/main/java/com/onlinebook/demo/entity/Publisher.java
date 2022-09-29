@@ -48,6 +48,11 @@ public class Publisher extends BaseEntity {
     @JsonIgnore
     private Set<Product> productSet;
 
+    public Publisher(Long id)
+    {
+     this.id=id;
+    }
+
     public Publisher(String name, String address,
                      Integer phoneNumber,
                      String email,

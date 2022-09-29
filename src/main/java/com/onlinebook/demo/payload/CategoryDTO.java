@@ -2,6 +2,7 @@ package com.onlinebook.demo.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.onlinebook.demo.entity.Category;
 import lombok.*;
 
 import java.io.Serializable;
@@ -34,5 +35,19 @@ public class CategoryDTO implements Serializable {
         this.deleted = deleted;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public CategoryDTO(Long id) {
+        this.id = id;
+    }
+
+    public CategoryDTO(Category category)
+    {
+        this.id = category.getId();
+        this.name = category.getName();
+        this.description = category.getDescription();
+        this.deleted = category.isDeleted();
+        this.createdAt = category.getCreatedAt();
+        this.updatedAt = category.getUpdatedAt();
     }
 }

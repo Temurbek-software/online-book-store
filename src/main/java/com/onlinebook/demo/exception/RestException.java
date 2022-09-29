@@ -11,7 +11,8 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class RestException extends RuntimeException {
+public class RestException extends RuntimeException
+{
     private String userMsg;
     private HttpStatus status;
     private String resourceName;

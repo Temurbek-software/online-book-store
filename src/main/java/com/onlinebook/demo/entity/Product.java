@@ -15,11 +15,9 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "product")
 @Entity
-@Builder
+@Table(name = "product")
 public class Product extends BaseEntity {
 
     @Column(name = "book_name")
@@ -81,13 +79,15 @@ public class Product extends BaseEntity {
             name = "product_author",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Author> productAuthors=new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "publisher_id", insertable = false, updatable = false)
     @JsonIgnore
     private Publisher publisher;
+
+
 
 
     public Product(String bookName,
@@ -98,7 +98,12 @@ public class Product extends BaseEntity {
                    Integer pageNumb,
                    String description,
                    String language,
-                   String isbnNumber) {
+                   String isbnNumber,
+                   Category category,
+                   Company company,
+                   Set<Author> productAuthors,
+                   Publisher publisher)
+    {
         this.bookName = bookName;
         this.e_price = e_price;
         this.printed_Price = printed_Price;
@@ -108,9 +113,11 @@ public class Product extends BaseEntity {
         this.description = description;
         this.language = language;
         this.isbnNumber = isbnNumber;
+        this.category = category;
+        this.company = company;
+        this.productAuthors = productAuthors;
+        this.publisher = publisher;
     }
-    public void addProductAuthors(Author author)
-    {
-        this.productAuthors.add(author);
-    }
+
+
 }
