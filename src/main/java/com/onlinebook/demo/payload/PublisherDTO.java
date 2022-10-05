@@ -30,10 +30,7 @@ public class PublisherDTO implements Serializable {
 
     private String description;
 
-    private boolean deleted = false;
-    private Date createdAt;
-    private Date updatedAt;
-    private Set<ProductDTO> productSet;
+    private Set<ProductDTO> publisherProductDTOSet;
 
     public PublisherDTO(Publisher publisher) {
         AuthorDTO authorDTO=new AuthorDTO();
@@ -44,9 +41,7 @@ public class PublisherDTO implements Serializable {
         this.email = publisher.getEmail();
         this.established_year = publisher.getEstablished_year();
         this.description = publisher.getDescription();
-        this.createdAt=publisher.getCreatedAt();
-        this.updatedAt=publisher.getUpdatedAt();
-        this.productSet=authorDTO.getProductDTO(publisher.getProductSet());
+        this.publisherProductDTOSet=authorDTO.getProductDTO(publisher.getPublisherProduct());
     }
 
     public PublisherDTO(Long id, String name,
@@ -62,8 +57,5 @@ public class PublisherDTO implements Serializable {
         this.email = email;
         this.established_year = established_year;
         this.description = description;
-        this.deleted = deleted;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }

@@ -18,36 +18,15 @@ public class CategoryDTO implements Serializable {
     private Long id;
     private String name;
 
-    private Set<ProductDTO> productDTOSet;
+    private Set<ProductDTO> categoryProductDTOSet;
     private String description;
-    private boolean deleted;
-    private Date createdAt;
-    private Date updatedAt;
 
     public CategoryDTO(Long id, String name,
-                       String description,
-                       boolean deleted, Date createdAt,
-                       Date updatedAt)
+                       String description)
     {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.deleted = deleted;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    public CategoryDTO(Long id) {
-        this.id = id;
-    }
-
-    public CategoryDTO(Category category)
-    {
-        this.id = category.getId();
-        this.name = category.getName();
-        this.description = category.getDescription();
-        this.deleted = category.isDeleted();
-        this.createdAt = category.getCreatedAt();
-        this.updatedAt = category.getUpdatedAt();
-    }
 }

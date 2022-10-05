@@ -32,11 +32,8 @@ public class AuthorDTO {
     private String description;
 
     //    @JsonIgnore
-    private Set<ProductDTO> productSet;
+    private Set<ProductDTO> productDTOSet;
 
-    private boolean deleted;
-    private Date createdAt;
-    private Date updatedAt;
 
     public AuthorDTO(Author author) {
         this.id = author.getId();
@@ -44,10 +41,7 @@ public class AuthorDTO {
         this.phoneNumber = author.getPhoneNumber();
         this.email = author.getEmail();
         this.description = author.getDescription();
-        this.productSet = getProductDTO(author.getProductSet());
-        this.deleted = author.isDeleted();
-        this.createdAt = author.getCreatedAt();
-        this.updatedAt = author.getUpdatedAt();
+        this.productDTOSet = getProductDTO(author.getAuthorProduct());
     }
 
     public Set<ProductDTO> getProductDTO(Set<Product> products) {
@@ -63,10 +57,7 @@ public class AuthorDTO {
                     product.getPageNumb(),
                     product.getDescription(),
                     product.getLanguage(),
-                    product.getIsbnNumber(),
-                    product.isDeleted(),
-                    product.getCreatedAt(),
-                    product.getUpdatedAt()
+                    product.getIsbnNumber()
             );
             productDTOSet.add(productDTO);
         }
@@ -75,17 +66,12 @@ public class AuthorDTO {
 
     public AuthorDTO(Long id, String firstName,
                      String lastName, String email,
-                     String phoneNumber, String description,
-                     boolean deleted, Date createdAt,
-                     Date updatedAt) {
+                     String phoneNumber, String description) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.description = description;
-        this.deleted = deleted;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }

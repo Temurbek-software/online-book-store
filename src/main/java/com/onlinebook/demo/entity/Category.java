@@ -18,20 +18,19 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "category")
-public class Category  extends BaseEntity
+public class
+Category  extends BaseEntity
 {
     @Column(name = "name")
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Product> product=new HashSet<>();
+    private Set<Product> categoryProduct=new HashSet<>();
 
     @Column(name = "description")
     @NotNull
     private String description;
-    public Category(Long id) {
-        this.id=id;
-    }
+
 }

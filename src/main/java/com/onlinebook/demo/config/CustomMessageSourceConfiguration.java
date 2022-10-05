@@ -9,7 +9,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import java.util.Locale;
 
 @Configuration
-public class CustomMessageSourceConfiguration {
+public class CustomMessageSourceConfiguration
+{
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

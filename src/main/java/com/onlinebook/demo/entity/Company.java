@@ -44,8 +44,10 @@ public class Company extends BaseEntity
    @NotNull
    private String description;
 
-   @OneToMany(mappedBy = "company")
-   private Set<Product> product_Id=new HashSet<>();
+   @OneToMany(mappedBy = "productCompany",
+           fetch = FetchType.LAZY,
+           orphanRemoval = true)
+   private Set<Product> companyProduct=new HashSet<>();
 
     public Company(Long id) {
         this.id=id;

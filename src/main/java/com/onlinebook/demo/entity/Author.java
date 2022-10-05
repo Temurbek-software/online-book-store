@@ -11,7 +11,6 @@ import java.util.*;
 
 @Getter
 @Setter
-//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -38,15 +37,11 @@ public class Author extends BaseEntity
     @NotNull
     private String description;
 
-    @ManyToMany(mappedBy = "productAuthors",fetch = FetchType.LAZY,
+    @ManyToMany(mappedBy = "productAuthor",fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST
             })
     @JsonIgnore
-    private Set<Product> productSet=new HashSet<>();
+    private Set<Product> authorProduct=new HashSet<>();
 
-    public Author(Long id)
-    {
-        this.id=id;
-    }
 }

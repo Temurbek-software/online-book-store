@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,27 +44,8 @@ public class Publisher extends BaseEntity {
     @NotNull
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "publisher_id") // we need to duplicate the physical information
+    @OneToMany(mappedBy = "productPublisher")
     @JsonIgnore
-    private Set<Product> productSet;
+    private Set<Product> publisherProduct=new HashSet<>();
 
-    public Publisher(Long id)
-    {
-     this.id=id;
-    }
-
-    public Publisher(String name, String address,
-                     Integer phoneNumber,
-                     String email,
-                     Date established_year,
-                     String description)
-    {
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.established_year = established_year;
-        this.description = description;
-    }
 }

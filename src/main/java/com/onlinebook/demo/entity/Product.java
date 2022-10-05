@@ -56,39 +56,33 @@ public class Product extends BaseEntity {
     @NotNull
     private String isbnNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id",
-            insertable = false,
-            updatable = false)
-    @JsonIgnore
+    @ManyToOne(cascade = {
+            CascadeType.REMOVE,CascadeType.PERSIST,CascadeType.MERGE
+    },fetch = FetchType.LAZY)
+//    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "company_id", referencedColumnName = "id",
-            insertable = false,
-            updatable = false)
-    @JsonIgnore
-    private Company company;
+    @ManyToOne(cascade = {
+            CascadeType.REMOVE,CascadeType.PERSIST,CascadeType.MERGE
+    },fetch = FetchType.LAZY)
+//    @JoinColumn(
+//            name = "company_Id", referencedColumnName = "id")
+    private Company productCompany;
+    @ManyToOne(cascade = {
+            CascadeType.REMOVE,CascadeType.PERSIST,CascadeType.MERGE
+    },fetch = FetchType.LAZY)
+//    @JoinColumn(name = "publisher_Id",referencedColumnName = "id")
+    private Publisher productPublisher;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,CascadeType.MERGE
+                    CascadeType.ALL
             })
     @JoinTable(
             name = "product_author",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-//    @JsonIgnore
-    private Set<Author> productAuthors=new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "publisher_id", insertable = false, updatable = false)
-    @JsonIgnore
-    private Publisher publisher;
-
-
-
+    private Set<Author> productAuthor=new HashSet<>();
 
     public Product(String bookName,
                    Double e_price,
@@ -114,9 +108,9 @@ public class Product extends BaseEntity {
         this.language = language;
         this.isbnNumber = isbnNumber;
         this.category = category;
-        this.company = company;
-        this.productAuthors = productAuthors;
-        this.publisher = publisher;
+        this.productCompany = company;
+        this.productAuthor = productAuthors;
+        this.productPublisher = publisher;
     }
 
 

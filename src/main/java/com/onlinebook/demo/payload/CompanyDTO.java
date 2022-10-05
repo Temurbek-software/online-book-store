@@ -25,10 +25,7 @@ public class CompanyDTO {
     private String email;
     private Date yearOfPublished;
     private String description;
-    private Set<ProductDTO> productSet;
-    private boolean deleted;
-    private Date createdAt;
-    private Date updatedAt;
+    private Set<ProductDTO> companyProductDTOSet;
 
     public CompanyDTO(Company company) {
         AuthorDTO authorDTO= new AuthorDTO();
@@ -39,10 +36,7 @@ public class CompanyDTO {
         this.email = company.getEmail();
         this.yearOfPublished = company.getYearOfPublished();
         this.description = company.getDescription();
-        this.productSet = authorDTO.getProductDTO(company.getProduct_Id());
-        this.deleted = company.isDeleted();
-        this.createdAt = company.getCreatedAt();
-        this.updatedAt = company.getUpdatedAt();
+        this.companyProductDTOSet = authorDTO.getProductDTO(company.getCompanyProduct());
     }
 
     public CompanyDTO(Long id, String nameOfCompany,
@@ -59,8 +53,5 @@ public class CompanyDTO {
         this.email = email;
         this.yearOfPublished = yearOfPublished;
         this.description = description;
-        this.deleted = deleted;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }

@@ -35,7 +35,6 @@ public class AuthorServiceImpl implements AuthorService
         return author;
     }
 
-
     @Override
     public ApiResult<List<AuthorDTO>> ListOfAllAuthors() {
         List<Author> authors = authorRepository.findAll();
