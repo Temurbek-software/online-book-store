@@ -18,8 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "category")
-public class
-Category  extends BaseEntity
+public class Category  extends BaseEntity
 {
     @Column(name = "name")
     @NotNull

@@ -57,23 +57,23 @@ public class Product extends BaseEntity {
     private String isbnNumber;
 
     @ManyToOne(cascade = {
-            CascadeType.REMOVE,CascadeType.PERSIST,CascadeType.MERGE
-    },fetch = FetchType.LAZY)
-//    @JoinColumn(name = "category_id", referencedColumnName = "id")
+            CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE
+    }, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
     @ManyToOne(cascade = {
-            CascadeType.REMOVE,CascadeType.PERSIST,CascadeType.MERGE
-    },fetch = FetchType.LAZY)
-//    @JoinColumn(
-//            name = "company_Id", referencedColumnName = "id")
+            CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE
+    }, fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "company_Id", referencedColumnName = "id")
+
     private Company productCompany;
     @ManyToOne(cascade = {
-            CascadeType.REMOVE,CascadeType.PERSIST,CascadeType.MERGE
-    },fetch = FetchType.LAZY)
-//    @JoinColumn(name = "publisher_Id",referencedColumnName = "id")
+            CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE
+    }, fetch = FetchType.LAZY)
+    @JoinColumn(name = "publisher_Id", referencedColumnName = "id")
     private Publisher productPublisher;
-
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.ALL
@@ -82,7 +82,8 @@ public class Product extends BaseEntity {
             name = "product_author",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> productAuthor=new HashSet<>();
+    @JsonIgnore
+    private Set<Author> productAuthor = new HashSet<>();
 
     public Product(String bookName,
                    Double e_price,
@@ -96,8 +97,7 @@ public class Product extends BaseEntity {
                    Category category,
                    Company company,
                    Set<Author> productAuthors,
-                   Publisher publisher)
-    {
+                   Publisher publisher) {
         this.bookName = bookName;
         this.e_price = e_price;
         this.printed_Price = printed_Price;

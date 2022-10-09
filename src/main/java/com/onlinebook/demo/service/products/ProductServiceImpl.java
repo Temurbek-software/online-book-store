@@ -5,6 +5,7 @@ import com.onlinebook.demo.mapper.ServiceMapper;
 import com.onlinebook.demo.payload.ApiResult;
 import com.onlinebook.demo.payload.AuthorDTO;
 import com.onlinebook.demo.payload.ProductDTO;
+import com.onlinebook.demo.repository.AuthorRepository;
 import com.onlinebook.demo.repository.CategoryRepository;
 import com.onlinebook.demo.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,8 @@ public class ProductServiceImpl implements ProductService
 {
     private final ProductRepository productRepository;
     private final ServiceMapper serviceMapper;
+
+    private final AuthorRepository authorRepository;
 
     private final CategoryRepository categoryRepository;
 
@@ -66,8 +69,14 @@ public class ProductServiceImpl implements ProductService
     }
     @Override
     public ApiResult<String> saveNewProduct(ProductDTO productDTO) {
-//        long idd=productDTO.getCategory().getId();
+//        long idd=productDTO.getCategory().getId(  );
         Product product = serviceMapper.mapToProduct(productDTO);
+        product.getProductAuthor().addAll(
+                productDTO.getAuthors()
+                        .stream().map(v->{
+                    AuthorDTO authorDTO=authorRepository.findAuthorById(v.getId());
+                })
+        )
 //       product.setCategory(category);
         productRepository.save(product);
         return ApiResult.successResponse("Successfully saved");

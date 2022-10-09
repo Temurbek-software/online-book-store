@@ -33,4 +33,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long>
             "where s.phone_number =:phoneNumber limit 1) " +
             "as author)>0",nativeQuery = true)
     boolean existsByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
+    Author findAuthorById(Long authorId);
 }

@@ -1,6 +1,7 @@
 package com.onlinebook.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onlinebook.demo.entity.template.BaseEntity;
 import com.onlinebook.demo.payload.CompanyDTO;
 import lombok.*;
@@ -47,6 +48,7 @@ public class Company extends BaseEntity
    @OneToMany(mappedBy = "productCompany",
            fetch = FetchType.LAZY,
            orphanRemoval = true)
+   @JsonIgnore
    private Set<Product> companyProduct=new HashSet<>();
 
     public Company(Long id) {

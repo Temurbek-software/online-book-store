@@ -40,9 +40,9 @@ public class ProductDTO {
     private String isbnNumber;
 
     private Set<AuthorDTO> authors;
-    private Integer category_Id;
-    private Integer publisher_Id;
-    private Integer company_Id;
+    private Long category_Id;
+    private Long publisher_Id;
+    private Long company_Id;
 
     public ProductDTO(Long id, String bookName, Double e_price,
                       Double printed_Price, Double audio_price,
