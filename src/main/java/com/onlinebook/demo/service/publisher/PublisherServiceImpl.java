@@ -48,7 +48,8 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public ApiResult<String> savePublisher(PublisherDTO publisherDTO) {
+    public ApiResult<String> savePublisher(PublisherDTO publisherDTO)
+    {
         Publisher publisher = mapToPublisher(publisherDTO);
         publisherRepository.save(publisher);
         return ApiResult.successResponse("Successfully saved");

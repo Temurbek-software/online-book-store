@@ -37,7 +37,8 @@ public class Author extends BaseEntity
     @NotNull
     private String description;
 
-    @ManyToMany(mappedBy = "productAuthor",fetch = FetchType.LAZY,
+    @JsonBackReference
+    @ManyToMany(mappedBy = "productAuthor",
             cascade = {
                     CascadeType.PERSIST
             })

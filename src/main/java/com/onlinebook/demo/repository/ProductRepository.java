@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>
 {
-    @Query(value = "select * from product s where s.is_deleted=:false",nativeQuery = true)
-    List<ProductDTO> getAllByProductsIfNotDeleted();
+    @Query(value = "select * from product s where s.is_deleted=:deleted",nativeQuery = true)
+    List<Product> getAllByProductsIfNotDeleted(boolean deleted);
     @Query(value = "select * from product s where s.is_deleted=:true", nativeQuery = true)
     List<ProductDTO> getAllProductsIfDeleted();
 //    @Transactional

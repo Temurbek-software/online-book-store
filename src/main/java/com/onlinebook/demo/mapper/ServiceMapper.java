@@ -7,8 +7,12 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ServiceMapper {
+
     @Mapping(target = "productDTOSet", ignore = true)
     AuthorDTO mapToAuthorDTO(Author author);
+
+    @Mapping(target = "authorProduct", ignore = true)
+    Author mapToAuthor(AuthorDTO authorDTO);
 
     @Mapping(target = "categoryProductDTOSet", ignore = true)
     CategoryDTO mapToCategoryDTO(Category category);
@@ -18,7 +22,6 @@ public interface ServiceMapper {
 
     @Mapping(target = "companyProductDTOSet", ignore = true)
     CompanyDTO mapToCompanyDTO(Company company);
-
 
     Product mapToProduct(ProductDTO productDTO);
 

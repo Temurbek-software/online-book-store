@@ -6,6 +6,7 @@ import com.onlinebook.demo.service.products.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,33 +19,28 @@ public class ProductController
     @GetMapping("/all")
     public ApiResult<List<ProductDTO>> getAllProducts()
     {
-        ApiResult<List<ProductDTO>> result = productService.getAllProduct();
-        return result;
+        return productService.getAllProduct();
     }
 
     @GetMapping("/{id}")
     public ApiResult<ProductDTO> getOneItem(@PathVariable Long id) {
-        ApiResult<ProductDTO> result = productService.getOneItem(id);
-        return result;
+        return productService.getOneItem(id);
     }
 
     @PostMapping("/save")
-    public ApiResult<String> saveProduct(@RequestBody ProductDTO productDTO)
+    public ApiResult<String> saveProduct(@Valid @RequestBody ProductDTO productDTO)
     {
-        ApiResult<String> apiResult = productService.saveNewProduct(productDTO);
-        return apiResult;
+        return productService.saveNewProduct(productDTO);
     }
 
     @DeleteMapping("/delete/{id}")
     public ApiResult<?> deleteProduct(@PathVariable Long id) {
-        ApiResult<?> apiResult2 = productService.deleteProduct(id);
-        return apiResult2;
+        return productService.deleteProduct(id);
     }
 
     @PutMapping("/update/{id}")
     public ApiResult<String> updateProduct(@PathVariable Long id,
                                            @RequestBody ProductDTO productDTO) {
-        ApiResult<String> apiResult = productService.updateExistProduct(id, productDTO);
-        return apiResult;
+        return productService.updateExistProduct(id, productDTO);
     }
 }

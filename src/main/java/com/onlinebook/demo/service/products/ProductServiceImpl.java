@@ -4,10 +4,11 @@ import com.onlinebook.demo.entity.*;
 import com.onlinebook.demo.mapper.ServiceMapper;
 import com.onlinebook.demo.payload.ApiResult;
 import com.onlinebook.demo.payload.AuthorDTO;
+import com.onlinebook.demo.payload.CompanyDTO;
 import com.onlinebook.demo.payload.ProductDTO;
-import com.onlinebook.demo.repository.AuthorRepository;
-import com.onlinebook.demo.repository.CategoryRepository;
-import com.onlinebook.demo.repository.ProductRepository;
+import com.onlinebook.demo.repository.*;
+import com.onlinebook.demo.service.company.CompanyService;
+import com.onlinebook.demo.utils.RestConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +19,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImpl implements ProductService
-{
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ServiceMapper serviceMapper;
-
     private final AuthorRepository authorRepository;
-
     private final CategoryRepository categoryRepository;
-
+    private final PublisherRepository publisherRepository;
+    private final CompanyRepository companyRepository;
 
 
     @Override
@@ -45,39 +44,51 @@ public class ProductServiceImpl implements ProductService
         productDTO.setDescription(product.getDescription());
         productDTO.setBookName(product.getBookName());
         productDTO.setAudio_price(product.getAudio_price());
-        productDTO.setAuthors(product.getProductAuthor().stream().map(
+        productDTO.setAuthorsList(product.getProductAuthor().stream().map(
                 author -> serviceMapper.mapToAuthorDTO(author)
         ).collect(Collectors.toSet()));
-//        productDTO.setCategory(serviceMapper.mapToCategoryDTO(product.getCategory()));
-//        productDTO.setPublisher(serviceMapper.mapToPublisherDTO(product.getProductPublisher()));
-//        productDTO.setCompany(serviceMapper.mapToCompanyDTO(product.getProductCompany()));
+        productDTO.setCategory_Id(serviceMapper.mapToCategoryDTO(product.getCategory()));
+        productDTO.setPublisher_Id(serviceMapper.mapToPublisherDTO(product.getProductPublisher()));
+        productDTO.setCompany_Id(serviceMapper.mapToCompanyDTO(product.getProductCompany()));
         return productDTO;
     }
 
     @Override
     public ApiResult<List<ProductDTO>> getAllProduct() {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.getAllByProductsIfNotDeleted(false);
         List<ProductDTO> productDTOList = products.stream()
                 .map(this::mapToProductDTO)
                 .collect(Collectors.toList());
         return ApiResult.successResponse(productDTOList);
     }
+
     @Override
     public ApiResult<ProductDTO> getOneItem(Long id) {
         Product product = productRepository.getById(id);
-        return ApiResult.successResponse(mapToProductDTO(product));
+
+        if (product.isDeleted())
+            return ApiResult.errorResponse("This book has already deleted", RestConstants.NOT_FOUND);
+        else
+            return ApiResult.successResponse(mapToProductDTO(product));
     }
+
     @Override
     public ApiResult<String> saveNewProduct(ProductDTO productDTO) {
-//        long idd=productDTO.getCategory().getId(  );
         Product product = serviceMapper.mapToProduct(productDTO);
-        product.getProductAuthor().addAll(
-                productDTO.getAuthors()
-                        .stream().map(v->{
-                    AuthorDTO authorDTO=authorRepository.findAuthorById(v.getId());
-                })
-        )
-//       product.setCategory(category);
+        Company company = companyRepository.getById(productDTO.getCompany_Id().getId());
+        Publisher publisher=publisherRepository.getById(productDTO.getPublisher_Id().getId());
+        Category category= categoryRepository.getById(productDTO.getCategory_Id().getId());
+        product.setProductCompany(company);
+        product.setProductPublisher(publisher);
+        product.setCategory(category);
+        Set<Author> productList=productDTO.getAuthorsList()
+                .stream().map(d->authorRepository.getById(d.getId()))
+                .collect(Collectors.toSet());
+        for (Author author:productList)
+        {
+            author.getAuthorProduct().add(product);
+        }
+        product.setProductAuthor(productList);
         productRepository.save(product);
         return ApiResult.successResponse("Successfully saved");
     }

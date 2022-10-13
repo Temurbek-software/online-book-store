@@ -20,7 +20,7 @@ public class CompanyController
         return companyService.getAllCompanyInfo();
     }
 
-    @PostMapping("/save")
+    @PostMapping("/insert")
     public ApiResult<String> saveCompany(CompanyDTO companyDTO) {
         return (ApiResult<String>) companyService.saveCompany(companyDTO);
     }
@@ -29,11 +29,16 @@ public class CompanyController
     public ApiResult<CompanyDTO> getOneCompany(@PathVariable long id) {
         return companyService.getOneCompany(id);
     }
-
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ApiResult<?> updateCompany(@PathVariable long id,
                                       @RequestBody CompanyDTO companyDTO)
     {
        return  companyService.changeCompany(companyDTO, id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ApiResult<?> deleteCompanyWithId(@PathVariable Long id)
+    {
+        return companyService.deleteCompanyById(id);
     }
 }
