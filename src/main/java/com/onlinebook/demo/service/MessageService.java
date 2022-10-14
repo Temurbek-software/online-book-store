@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MessageService {
     private static MessageSource messageSource;
-
     @Autowired
     public void setSomeThing(MessageSource messageSource)
     {
