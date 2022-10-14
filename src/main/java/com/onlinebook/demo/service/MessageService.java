@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
  * @apiNote CLIENTGA QAYTARILADIGAN MESSAGE'LAR BILAN ISHLAYDIGAN SERVICE
  * @since 01.12.2021
  */
+
 @Component
 @RequiredArgsConstructor
 public class MessageService {
