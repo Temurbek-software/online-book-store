@@ -26,6 +26,9 @@ public interface ServiceMapper {
     @Mapping(target = "companyProductDTOSet", ignore = true)
     CompanyDTO mapToCompanyDTO(Company company);
 
+    @Mapping(target = "companyProductDTOSet",ignore = true)
+    Company mapToCompany(CompanyDTO companyDTO);
+
     Product mapToProduct(ProductDTO productDTO);
 
 }

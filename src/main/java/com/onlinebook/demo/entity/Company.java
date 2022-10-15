@@ -51,17 +51,5 @@ public class Company extends BaseEntity
    @JsonIgnore
    private Set<Product> companyProduct=new HashSet<>();
 
-    public Company(Long id) {
-        this.id=id;
-    }
 
-    public Company(CompanyDTO companyDTO)
-   {
-    this.nameOfCompany=companyDTO.getNameOfCompany();
-    this.address=companyDTO.getAddress();
-    this.phoneNumber=companyDTO.getPhoneNumber();
-    this.email=companyDTO.getEmail();
-    this.yearOfPublished=companyDTO.getYearOfPublished();
-    this.description=companyDTO.getDescription();
-   }
 }

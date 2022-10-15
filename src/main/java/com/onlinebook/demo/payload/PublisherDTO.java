@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PublisherDTO implements Serializable {
+public class PublisherDTO {
     private Long id;
 
     private String name;

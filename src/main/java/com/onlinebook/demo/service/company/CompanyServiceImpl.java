@@ -1,42 +1,43 @@
 package com.onlinebook.demo.service.company;
 
 import com.onlinebook.demo.entity.Company;
+import com.onlinebook.demo.mapper.ServiceMapper;
 import com.onlinebook.demo.payload.ApiResult;
 import com.onlinebook.demo.payload.CompanyDTO;
 import com.onlinebook.demo.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyServiceImpl implements CompanyService
-{
+public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
+    private final ServiceMapper serviceMapper;
 
     @Override
     public Company mapToCompany(CompanyDTO companyDTO) {
-       if (companyDTO==null)
-       {
-           return null;
-       }
-       Company company= new Company();
-       company.setNameOfCompany(companyDTO.getNameOfCompany());
-       company.setAddress(companyDTO.getAddress());
-       company.setDescription(companyDTO.getDescription());
-       company.setEmail(companyDTO.getEmail());
-       company.setPhoneNumber(companyDTO.getPhoneNumber());
-       company.setYearOfPublished(companyDTO.getYearOfPublished());
-       return company;
+        if (companyDTO == null) {
+            return null;
+        }
+        Company company = new Company();
+        company.setNameOfCompany(companyDTO.getNameOfCompany());
+        company.setAddress(companyDTO.getAddress());
+        company.setDescription(companyDTO.getDescription());
+        company.setEmail(companyDTO.getEmail());
+        company.setPhoneNumber(companyDTO.getPhoneNumber());
+        company.setYearOfPublished(companyDTO.getYearOfPublished());
+        return company;
     }
 
     @Override
     public ApiResult<List<CompanyDTO>> getAllCompanyInfo() {
         List<Company> companies = companyRepository.findAll();
         List<CompanyDTO> companyDTOS = companies
-                .stream().map(CompanyDTO::new)
+                .stream().map(serviceMapper::mapToCompanyDTO)
                 .collect(Collectors.toList());
         return ApiResult.successResponse(companyDTOS);
     }
@@ -44,7 +45,7 @@ public class CompanyServiceImpl implements CompanyService
     @Override
     public ApiResult<CompanyDTO> getOneCompany(long id) {
         Company company = companyRepository.getById(id);
-        CompanyDTO companyDTO=new CompanyDTO(company);
+        CompanyDTO companyDTO = serviceMapper.mapToCompanyDTO(company);
         return ApiResult.successResponse(companyDTO);
     }
 
@@ -53,31 +54,29 @@ public class CompanyServiceImpl implements CompanyService
         Company company = companyRepository.getById(id);
         company.setDeleted(true);
         companyRepository.save(company);
-        CompanyDTO companyDTO=new CompanyDTO(company);
+        CompanyDTO companyDTO = serviceMapper.mapToCompanyDTO(company);
         return ApiResult.successResponse(companyDTO);
     }
 
     @Override
-    public ApiResult<?> saveCompany(CompanyDTO companyDTO)
-    {
+    public ApiResult<?> saveCompany(CompanyDTO companyDTO) {
 
-        Company company=new Company(companyDTO);
+        Company company = serviceMapper.mapToCompany(companyDTO);
         companyRepository.save(company);
         return ApiResult.successResponse(companyDTO);
     }
+
     @Override
-    public ApiResult<?> changeCompany(CompanyDTO companyDTO,long id)
-    {
-        Company company=companyRepository.getById(id);
+    public ApiResult<?> changeCompany(CompanyDTO companyDTO, long id) {
+        Company company = companyRepository.getById(id);
         company.setEmail(companyDTO.getEmail());
         company.setNameOfCompany(companyDTO.getNameOfCompany());
         company.setAddress(companyDTO.getAddress());
         company.setPhoneNumber(companyDTO.getPhoneNumber());
         company.setYearOfPublished(companyDTO.getYearOfPublished());
         company.setDescription(companyDTO.getDescription());
-        return ApiResult.successResponse(company,true);
+        return ApiResult.successResponse(company, true);
     }
-
 
 
 }
