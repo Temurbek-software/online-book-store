@@ -17,8 +17,11 @@ public interface ServiceMapper {
     @Mapping(target = "categoryProductDTOSet", ignore = true)
     CategoryDTO mapToCategoryDTO(Category category);
 
-    @Mapping(target = "publisherProductDTOSet", ignore = true)
+    @Mapping(target = "publisherSet", ignore = true)
     PublisherDTO mapToPublisherDTO(Publisher publisher);
+
+    @Mapping(target = "publisherProduct", ignore = true)
+    Publisher mapToPublisherDTO(PublisherDTO publisherDTO);
 
     @Mapping(target = "companyProductDTOSet", ignore = true)
     CompanyDTO mapToCompanyDTO(Company company);

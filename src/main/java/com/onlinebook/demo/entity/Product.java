@@ -67,8 +67,8 @@ public class Product extends BaseEntity {
     }, fetch = FetchType.LAZY)
     @JoinColumn(
             name = "company_Id", referencedColumnName = "id")
-
     private Company productCompany;
+
     @ManyToOne(cascade = {
             CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE
     }, fetch = FetchType.LAZY)
@@ -98,7 +98,8 @@ public class Product extends BaseEntity {
                    Category category,
                    Company company,
                    Set<Author> productAuthors,
-                   Publisher publisher) {
+                   Publisher publisher)
+    {
         this.bookName = bookName;
         this.e_price = e_price;
         this.printed_Price = printed_Price;
@@ -113,6 +114,4 @@ public class Product extends BaseEntity {
         this.productAuthor = productAuthors;
         this.productPublisher = publisher;
     }
-
-
 }

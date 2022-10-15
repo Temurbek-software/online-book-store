@@ -30,32 +30,6 @@ public class PublisherDTO implements Serializable {
 
     private String description;
 
-    private Set<ProductDTO> publisherProductDTOSet;
+    private Set<ProductDTO> publisherSet;
 
-    public PublisherDTO(Publisher publisher) {
-        AuthorDTO authorDTO=new AuthorDTO();
-        this.id = publisher.getId();
-        this.name = publisher.getName();
-        this.address = publisher.getAddress();
-        this.phoneNumber = publisher.getPhoneNumber();
-        this.email = publisher.getEmail();
-        this.established_year = publisher.getEstablished_year();
-        this.description = publisher.getDescription();
-        this.publisherProductDTOSet=authorDTO.getProductDTO(publisher.getPublisherProduct());
-    }
-
-    public PublisherDTO(Long id, String name,
-                        String address,
-                        Integer phoneNumber,
-                        String email, Date established_year,
-                        String description, boolean deleted,
-                        Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.established_year = established_year;
-        this.description = description;
-    }
 }

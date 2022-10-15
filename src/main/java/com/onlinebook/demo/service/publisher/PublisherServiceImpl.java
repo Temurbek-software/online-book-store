@@ -2,6 +2,7 @@ package com.onlinebook.demo.service.publisher;
 
 
 import com.onlinebook.demo.entity.Publisher;
+import com.onlinebook.demo.mapper.ServiceMapper;
 import com.onlinebook.demo.payload.ApiResult;
 import com.onlinebook.demo.payload.PublisherDTO;
 import com.onlinebook.demo.repository.PublisherRepository;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PublisherServiceImpl implements PublisherService {
     private final PublisherRepository publisherRepository;
+    private final ServiceMapper serviceMapper;
 
     @Override
     public Publisher mapToPublisher(PublisherDTO publisherDTO) {
@@ -35,7 +37,7 @@ public class PublisherServiceImpl implements PublisherService {
     public ApiResult<List<PublisherDTO>> getAllPublisher() {
         List<Publisher> publishers = publisherRepository.findAll();
         List<PublisherDTO> publisherDTOS = publishers.stream()
-                .map(PublisherDTO::new)
+                .map(serviceMapper::mapToPublisherDTO)
                 .collect(Collectors.toList());
         return ApiResult.successResponse(publisherDTOS);
     }
@@ -43,14 +45,14 @@ public class PublisherServiceImpl implements PublisherService {
     @Override
     public ApiResult<PublisherDTO> getOnePublisher(Long id) {
         Publisher publisher = publisherRepository.getById(id);
-        PublisherDTO publisherDTO= new PublisherDTO(publisher);
+        PublisherDTO publisherDTO= serviceMapper.mapToPublisherDTO(publisher);
         return ApiResult.successResponse(publisherDTO);
     }
 
     @Override
     public ApiResult<String> savePublisher(PublisherDTO publisherDTO)
     {
-        Publisher publisher = mapToPublisher(publisherDTO);
+        Publisher publisher = serviceMapper.mapToPublisherDTO(publisherDTO);
         publisherRepository.save(publisher);
         return ApiResult.successResponse("Successfully saved");
     }
@@ -60,7 +62,9 @@ public class PublisherServiceImpl implements PublisherService {
         if (publisherRepository.getOne(id) == null) {
             return ApiResult.successResponse("Not exist");
         } else {
-            publisherRepository.deleteById(id);
+            Publisher publisher=publisherRepository.getById(id);
+            publisher.setDeleted(true);
+            publisherRepository.save(publisher);
             return ApiResult.successResponse("Successfuly deleted");
         }
     }
