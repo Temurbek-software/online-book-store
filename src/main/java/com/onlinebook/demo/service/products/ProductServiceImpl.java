@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toSet());
         for (Author author:productList)
         {
-            author.getAuthorProduct().add(product);
+            author.getProductDTOSet().add(product);
         }
         product.setProductAuthor(productList);
         productRepository.save(product);

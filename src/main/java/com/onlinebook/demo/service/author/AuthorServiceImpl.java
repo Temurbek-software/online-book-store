@@ -1,7 +1,9 @@
 package com.onlinebook.demo.service.author;
 
 import com.onlinebook.demo.entity.Author;
+import com.onlinebook.demo.entity.Category;
 import com.onlinebook.demo.exception.RestException;
+import com.onlinebook.demo.mapper.ServiceMapper;
 import com.onlinebook.demo.payload.ApiResult;
 import com.onlinebook.demo.payload.AuthorDTO;
 import com.onlinebook.demo.payload.ProductDTO;
@@ -14,33 +16,22 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorServiceImpl implements AuthorService
-{
+public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
-    @Override
-    public Author mapToAuthorDTO(AuthorDTO authorDTO) {
-        if (authorDTO == null) {
-            return null;
-        }
-        Author author = new Author();
-        author.setFirstName(author.getFirstName());
-        author.setLastName(author.getLastName());
-        author.setDescription(author.getDescription());
-        author.setEmail(author.getEmail());
-        author.setPhoneNumber(author.getPhoneNumber());
-        return author;
-    }
+    private final ServiceMapper serviceMapper;
+
 
     @Override
     public ApiResult<List<AuthorDTO>> ListOfAllAuthors() {
         List<Author> authors = authorRepository.findAll();
         List<AuthorDTO> authorDTOS = authors
                 .stream()
-                .map(AuthorDTO::new)
+                .map(serviceMapper::mapToAuthorDTO)
                 .collect(Collectors.toList());
         return ApiResult.successResponse(authorDTOS);
     }
@@ -49,7 +40,8 @@ public class AuthorServiceImpl implements AuthorService
     public ApiResult<AuthorDTO> getAuthorById(Long id) {
         try {
             Author author = authorRepository.getById(id);
-            AuthorDTO authorDTO = new AuthorDTO(author);
+
+            AuthorDTO authorDTO = serviceMapper.mapToAuthorDTO(author);
             return ApiResult.successResponse(authorDTO,
                     MessageService.getMessage("AUTHOR_FOUND"));
         } catch (EntityNotFoundException exception) {
@@ -166,21 +158,19 @@ public class AuthorServiceImpl implements AuthorService
     }
 
     @Override
-    public ApiResult<String> updatingAuthorById(Long id, AuthorDTO authorDTO) {
-        Author author = authorRepository.findById(id).get();
-//        Author author1 = new Author(authorDTO);
-//        if (!(author1 == null)) {
-//            author1.setFirstName(author.getFirstName());
-//            author1.setLastName(author.getLastName());
-//            author1.setDescription(author.getDescription());
-//            author1.setPhoneNumber(author.getPhoneNumber());
-//            author1.setEmail(author.getEmail());
-//            authorRepository.save(author1);
-//            return new ApiResult<>("This Author has succesfully saved");
-//        } else {
-        return new ApiResult<>("This Author does not exist");
-//        }
+    public ApiResult<?> updatingAuthorById(Long id, AuthorDTO authorDTO) {
+        Optional<Author> author1 = authorRepository.findById(id);
+        if (author1.isPresent()) {
+            Author author = authorRepository.getById(id);
+            author.setLastName(authorDTO.getLastName());
+            author.setFirstName(authorDTO.getFirstName());
+            author.setEmail(authorDTO.getEmail());
+            author.setPhoneNumber(authorDTO.getPhoneNumber());
+            author.setDescription(authorDTO.getDescription());
+        } else {
+            throw RestException.restThrow("not found", "author",
+                    id, MessageService.getMessage("AUTHOR_NOT_FOUND"));
+        }
+        return ApiResult.successResponse(authorDTO, "category has changed");
     }
-
-
 }

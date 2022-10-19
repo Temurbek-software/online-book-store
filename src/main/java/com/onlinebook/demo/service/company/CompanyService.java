@@ -12,7 +12,4 @@ public interface CompanyService {
     ApiResult<?> deleteCompanyById(long id);
     ApiResult<?> saveCompany(CompanyDTO companyDTO);
     ApiResult<?> changeCompany(CompanyDTO companyDTO,long id);
-
-    Company mapToCompany(CompanyDTO companyDTO);
-
 }

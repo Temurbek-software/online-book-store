@@ -37,12 +37,12 @@ public class Author extends BaseEntity
     @NotNull
     private String description;
 
-    @JsonBackReference
+//    @JsonBackReference
     @ManyToMany(mappedBy = "productAuthor",
             cascade = {
                     CascadeType.PERSIST
             })
-    @JsonIgnore
-    private Set<Product> authorProduct=new HashSet<>();
+//    @JsonIgnore
+    private Set<Product> productDTOSet=new HashSet<>();
 
 }

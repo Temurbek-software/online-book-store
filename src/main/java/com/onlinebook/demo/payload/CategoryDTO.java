@@ -17,16 +17,6 @@ import java.util.Set;
 public class CategoryDTO implements Serializable {
     private Long id;
     private String name;
-
-    private Set<ProductDTO> categoryProductDTOSet;
     private String description;
-
-    public CategoryDTO(Long id, String name,
-                       String description)
-    {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
+    private Set<ProductDTO> categoryProduct;
 }

@@ -34,44 +34,4 @@ public class AuthorDTO {
     //    @JsonIgnore
     private Set<ProductDTO> productDTOSet;
 
-
-    public AuthorDTO(Author author) {
-        this.id = author.getId();
-        this.firstName = author.getFirstName();
-        this.phoneNumber = author.getPhoneNumber();
-        this.email = author.getEmail();
-        this.description = author.getDescription();
-        this.productDTOSet = getProductDTO(author.getAuthorProduct());
-    }
-
-    public Set<ProductDTO> getProductDTO(Set<Product> products) {
-        Set<ProductDTO> productDTOSet = new HashSet<>();
-        for (Product product : products) {
-            ProductDTO productDTO = new ProductDTO(
-                    product.getId(),
-                    product.getBookName(),
-                    product.getE_price(),
-                    product.getPrinted_Price(),
-                    product.getAudio_price(),
-                    product.getYearOfPublished(),
-                    product.getPageNumb(),
-                    product.getDescription(),
-                    product.getLanguage(),
-                    product.getIsbnNumber()
-            );
-            productDTOSet.add(productDTO);
-        }
-        return productDTOSet;
-    }
-
-    public AuthorDTO(Long id, String firstName,
-                     String lastName, String email,
-                     String phoneNumber, String description) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.description = description;
-    }
 }

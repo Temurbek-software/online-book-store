@@ -11,5 +11,5 @@ public interface CategoryService {
     ApiResult<CategoryDTO> getCategoryDTOById(Long id);
     ApiResult<String> insertNewCategory(CategoryDTO categoryDTO);
     ApiResult<?> deleteCategoryDTOById(Long id);
-    ApiResult<String> updateExistCategory(Long id,CategoryDTO categoryDTO);
+    ApiResult<?> updateExistCategory(Long id,CategoryDTO categoryDTO);
 }

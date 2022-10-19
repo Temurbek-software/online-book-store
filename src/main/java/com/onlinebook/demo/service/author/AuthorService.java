@@ -18,9 +18,7 @@ public interface AuthorService
     ApiResult<AuthorDTO> getAuthorById(Long id);
     ApiResult<String> insertNewAuthor(AuthorDTO authorDTO);
     ApiResult<?> deleteAuthorById(Long id);
-    ApiResult<String> updatingAuthorById(Long id,AuthorDTO authorDTO);
-
-    Author mapToAuthorDTO(AuthorDTO authorDTO);
+    ApiResult<?> updatingAuthorById(Long id,AuthorDTO authorDTO);
 
 
 }

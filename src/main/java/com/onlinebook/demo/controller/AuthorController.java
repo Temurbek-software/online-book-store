@@ -19,7 +19,7 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @GetMapping("/all")
-        public ApiResult<List<AuthorDTO>> selectAllAuthors() {
+    public ApiResult<List<AuthorDTO>> selectAllAuthors() {
         ApiResult<List<AuthorDTO>> apiResult = authorService.ListOfAllAuthors();
         return apiResult;
     }
@@ -41,9 +41,7 @@ public class AuthorController {
         ApiResult<String> saveAuthor = null;
         try {
             saveAuthor = authorService.insertNewAuthor(authorDTO);
-        }
-        catch (EntityNotFoundException exception)
-        {
+        } catch (EntityNotFoundException exception) {
             exception.printStackTrace();
         }
         return saveAuthor;
@@ -54,11 +52,9 @@ public class AuthorController {
         ApiResult<?> del = authorService.deleteAuthorById(id);
         return del;
     }
-
     @PutMapping("/update/{id}")
     public ApiResult<?> updateAuthorById(@PathVariable Long id,
                                          @RequestBody AuthorDTO authorDTO) {
-        ApiResult<String> status = authorService.updatingAuthorById(id, authorDTO);
-        return status;
+        return authorService.updatingAuthorById(id, authorDTO);
     }
 }

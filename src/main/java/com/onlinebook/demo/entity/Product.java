@@ -74,7 +74,7 @@ public class Product extends BaseEntity {
     }, fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_Id", referencedColumnName = "id")
     private Publisher productPublisher;
-    @JsonBackReference
+//    @JsonBackReference
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.ALL
@@ -83,7 +83,7 @@ public class Product extends BaseEntity {
             name = "product_author",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Author> productAuthor = new HashSet<>();
 
     public Product(String bookName,

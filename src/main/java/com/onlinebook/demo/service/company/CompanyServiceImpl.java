@@ -1,14 +1,17 @@
 package com.onlinebook.demo.service.company;
 
 import com.onlinebook.demo.entity.Company;
+import com.onlinebook.demo.exception.RestException;
 import com.onlinebook.demo.mapper.ServiceMapper;
 import com.onlinebook.demo.payload.ApiResult;
 import com.onlinebook.demo.payload.CompanyDTO;
 import com.onlinebook.demo.repository.CompanyRepository;
+import com.onlinebook.demo.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -19,23 +22,8 @@ public class CompanyServiceImpl implements CompanyService {
     private final ServiceMapper serviceMapper;
 
     @Override
-    public Company mapToCompany(CompanyDTO companyDTO) {
-        if (companyDTO == null) {
-            return null;
-        }
-        Company company = new Company();
-        company.setNameOfCompany(companyDTO.getNameOfCompany());
-        company.setAddress(companyDTO.getAddress());
-        company.setDescription(companyDTO.getDescription());
-        company.setEmail(companyDTO.getEmail());
-        company.setPhoneNumber(companyDTO.getPhoneNumber());
-        company.setYearOfPublished(companyDTO.getYearOfPublished());
-        return company;
-    }
-
-    @Override
     public ApiResult<List<CompanyDTO>> getAllCompanyInfo() {
-        List<Company> companies = companyRepository.findAll();
+        List<Company> companies = companyRepository.getAllCompanyIfNotDeleted(false);
         List<CompanyDTO> companyDTOS = companies
                 .stream().map(serviceMapper::mapToCompanyDTO)
                 .collect(Collectors.toList());
@@ -60,7 +48,6 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public ApiResult<?> saveCompany(CompanyDTO companyDTO) {
-
         Company company = serviceMapper.mapToCompany(companyDTO);
         companyRepository.save(company);
         return ApiResult.successResponse(companyDTO);
@@ -68,14 +55,21 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public ApiResult<?> changeCompany(CompanyDTO companyDTO, long id) {
-        Company company = companyRepository.getById(id);
-        company.setEmail(companyDTO.getEmail());
-        company.setNameOfCompany(companyDTO.getNameOfCompany());
-        company.setAddress(companyDTO.getAddress());
-        company.setPhoneNumber(companyDTO.getPhoneNumber());
-        company.setYearOfPublished(companyDTO.getYearOfPublished());
-        company.setDescription(companyDTO.getDescription());
-        return ApiResult.successResponse(company, true);
+        Optional<Company> company = companyRepository.findById(id);
+        if (company.isPresent()) {
+            Company company1 = companyRepository.getById(id);
+            company1.setEmail(companyDTO.getEmail());
+            company1.setNameOfCompany(companyDTO.getNameOfCompany());
+            company1.setAddress(companyDTO.getAddress());
+            company1.setPhoneNumber(companyDTO.getPhoneNumber());
+            company1.setYearOfPublished(companyDTO.getYearOfPublished());
+            company1.setDescription(companyDTO.getDescription());
+        } else {
+            throw RestException.restThrow("not found", "company",
+                    id, MessageService.getMessage("NOT_FOUND_COMPANY"));
+        }
+
+        return ApiResult.successResponse(company, "Company has changed");
     }
 
 

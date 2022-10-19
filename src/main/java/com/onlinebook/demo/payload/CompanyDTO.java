@@ -25,6 +25,6 @@ public class CompanyDTO {
     private String email;
     private Date yearOfPublished;
     private String description;
-    private Set<ProductDTO> companyProductDTOSet;
+    private Set<ProductDTO> companyProduct;
 
 }
