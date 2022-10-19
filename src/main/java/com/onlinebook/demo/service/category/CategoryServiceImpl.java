@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ApiResult<String> insertNewCategory(CategoryDTO categoryDTO) {
-        Category category = serviceMapper.mapToCetegory(categoryDTO);
+        Category category = serviceMapper.mapToCategory(categoryDTO);
         categoryRepository.save(category);
         return ApiResult.successResponse("Saved successfully");
     }
