@@ -42,7 +42,7 @@ public class Author extends BaseEntity
             cascade = {
                     CascadeType.PERSIST
             })
-//    @JsonIgnore
+    @JsonIgnore
     private Set<Product> productDTOSet=new HashSet<>();
 
 }
