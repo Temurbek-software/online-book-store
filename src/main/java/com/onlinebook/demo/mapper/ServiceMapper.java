@@ -9,7 +9,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ServiceMapper {
 
-    Category mapToCetegory(CategoryDTO categoryDTO);
+    Category mapToCategory(CategoryDTO categoryDTO);
+    @Mapping(target = "productDTOSet",ignore = true)
     AuthorDTO mapToAuthorDTO(Author author);
 
     @Mapping(target = "productDTOSet", ignore = true)
