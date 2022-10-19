@@ -74,7 +74,6 @@ public class Product extends BaseEntity {
     }, fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_Id", referencedColumnName = "id")
     private Publisher productPublisher;
-//    @JsonBackReference
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.ALL
