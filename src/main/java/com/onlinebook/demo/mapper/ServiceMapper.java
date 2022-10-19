@@ -2,6 +2,7 @@ package com.onlinebook.demo.mapper;
 
 import com.onlinebook.demo.entity.*;
 import com.onlinebook.demo.payload.*;
+import org.mapstruct.MapMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -14,6 +15,7 @@ public interface ServiceMapper {
     @Mapping(target = "productDTOSet", ignore = true)
     Author mapToAuthor(AuthorDTO authorDTO);
 
+    @Mapping(target = "categoryProduct",ignore = true)
     CategoryDTO mapToCategoryDTO(Category category);
 
     @Mapping(target = "publisherSet", ignore = true)
@@ -22,6 +24,7 @@ public interface ServiceMapper {
     @Mapping(target = "publisherProduct", ignore = true)
     Publisher mapToPublisherDTO(PublisherDTO publisherDTO);
 
+    @Mapping(target = "companyProduct",ignore = true)
     CompanyDTO mapToCompanyDTO(Company company);
 
     @Mapping(target = "companyProduct",ignore = true)
