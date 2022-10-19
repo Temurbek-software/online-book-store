@@ -1,5 +1,6 @@
 package com.onlinebook.demo.payload;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.onlinebook.demo.entity.Product;
 import com.onlinebook.demo.entity.Publisher;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PublisherDTO {
     private Long id;
 
