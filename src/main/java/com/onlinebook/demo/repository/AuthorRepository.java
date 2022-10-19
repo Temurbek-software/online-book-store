@@ -1,6 +1,7 @@
 package com.onlinebook.demo.repository;
 
 import com.onlinebook.demo.entity.Author;
+import com.onlinebook.demo.entity.Category;
 import com.onlinebook.demo.payload.AuthorDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,6 +15,8 @@ import java.util.List;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long>
 {
+    @Query(value = "select * from author s where s.is_deleted=:deleted",nativeQuery = true)
+    List<Author> getAllByAuthorIfNotDeleted(boolean deleted);
     @Query(value = "select (select count(*) from (select * from author s " +
             "where s.first_name =:firstname limit 1) " +
             "as author)>0",nativeQuery = true)

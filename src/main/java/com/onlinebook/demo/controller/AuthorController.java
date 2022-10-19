@@ -38,13 +38,7 @@ public class AuthorController {
 
     @PostMapping("/insertAuthor")
     public ApiResult<?> saveAuthor(@RequestBody AuthorDTO authorDTO) {
-        ApiResult<String> saveAuthor = null;
-        try {
-            saveAuthor = authorService.insertNewAuthor(authorDTO);
-        } catch (EntityNotFoundException exception) {
-            exception.printStackTrace();
-        }
-        return saveAuthor;
+        return authorService.insertNewAuthor(authorDTO);
     }
 
     @DeleteMapping("/delete/{id}")

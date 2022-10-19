@@ -9,7 +9,6 @@ import com.onlinebook.demo.payload.AuthorDTO;
 import com.onlinebook.demo.payload.ProductDTO;
 import com.onlinebook.demo.repository.AuthorRepository;
 import com.onlinebook.demo.service.MessageService;
-import com.onlinebook.demo.utils.RestConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public ApiResult<List<AuthorDTO>> ListOfAllAuthors() {
-        List<Author> authors = authorRepository.findAll();
+        List<Author> authors = authorRepository.getAllByAuthorIfNotDeleted(false);
         List<AuthorDTO> authorDTOS = authors
                 .stream()
                 .map(serviceMapper::mapToAuthorDTO)
@@ -52,97 +51,100 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public ApiResult<String> insertNewAuthor(AuthorDTO author) {
-        int num = 0;
-        boolean outcome = false;
-        String[] strings = new String[4];
-        for (int i = 1; i <= 4; i++) {
-            switch (i) {
-                case 1:
-                    if (authorRepository.existsByFirstName(author.getFirstName())) {
-                        num = num + 1;
-                        strings[0] = "first name";
-                    }
-                    break;
-                case 2:
-                    if (authorRepository.existsByLastName(author.getLastName())) {
-                        num = num + 1;
-                        strings[1] = "last name";
-                    }
-                    break;
-                case 3:
-                    if (authorRepository.existsByEmail(author.getEmail())) {
-                        num = num + 1;
-                        strings[2] = "email";
-                    }
-                    break;
-                case 4:
-                    if (authorRepository.existsByPhoneNumber(author.getPhoneNumber())) {
-                        num = num + 1;
-                        strings[3] = "phone number";
-                    }
-                    break;
-
-            }
-        }
-        for (String s : strings) {
-            System.out.println(s);
-        }
-        StringBuilder rs = new StringBuilder();
-        switch (num) {
-            case 1:
-                for (String s : strings) {
-                    if (s == null)
-                        continue;
-                    else rs.append(s);
-                    break;
-                }
-                rs.append(" exists");
-                break;
-            case 2:
-
-                for (String s : strings) {
-                    if (s == null)
-                        continue;
-                    else rs.append(s + " and ");
-                }
-                rs = rs.delete(rs.length() - 5, rs.length()).append(" exist");
-                break;
-            case 3:
-                int g = 0;
-                for (int i = 0; i < 4; i++) {
-
-                    if (strings[i] == null)
-                        continue;
-                    else {
-                        if (g > 1) {
-                            rs.append(",").append(strings[i]);
-                            g = g + 1;
-                        }
-                        if (g > 2) {
-                            rs.append(" and").append(strings[i]).append(" exist");
-                            break;
-                        } else {
-                            rs.append(strings[i]);
-                            g = g + 1;
-                        }
-                    }
-                }
-                break;
-            case 4:
-                rs.append(strings[0]).append(",")
-                        .append(strings[1])
-                        .append(",")
-                        .append(strings[2])
-                        .append(" and ")
-                        .append(strings[3] + " exist");
-                break;
-            default:
-                outcome = true;
-
-        }
-
-        return outcome ? ApiResult.successResponse("successfully saved")
-                : ApiResult.errorResponse(rs.toString(), RestConstants.ACCESS_DENIED);
+        Author author1 = serviceMapper.mapToAuthor(author);
+        authorRepository.save(author1);
+        return ApiResult.successResponse("Saved successfully");
+//        int num = 0;
+//        boolean outcome = false;
+//        String[] strings = new String[4];
+//        for (int i = 1; i <= 4; i++) {
+//            switch (i) {
+//                case 1:
+//                    if (authorRepository.existsByFirstName(author.getFirstName())) {
+//                        num = num + 1;
+//                        strings[0] = "first name";
+//                    }
+//                    break;
+//                case 2:
+//                    if (authorRepository.existsByLastName(author.getLastName())) {
+//                        num = num + 1;
+//                        strings[1] = "last name";
+//                    }
+//                    break;
+//                case 3:
+//                    if (authorRepository.existsByEmail(author.getEmail())) {
+//                        num = num + 1;
+//                        strings[2] = "email";
+//                    }
+//                    break;
+//                case 4:
+//                    if (authorRepository.existsByPhoneNumber(author.getPhoneNumber())) {
+//                        num = num + 1;
+//                        strings[3] = "phone number";
+//                    }
+//                    break;
+//
+//            }
+//        }
+//        for (String s : strings) {
+//            System.out.println(s);
+//        }
+//        StringBuilder rs = new StringBuilder();
+//        switch (num) {
+//            case 1:
+//                for (String s : strings) {
+//                    if (s == null)
+//                        continue;
+//                    else rs.append(s);
+//                    break;
+//                }
+//                rs.append(" exists");
+//                break;
+//            case 2:
+//
+//                for (String s : strings) {
+//                    if (s == null)
+//                        continue;
+//                    else rs.append(s + " and ");
+//                }
+//                rs = rs.delete(rs.length() - 5, rs.length()).append(" exist");
+//                break;
+//            case 3:
+//                int g = 0;
+//                for (int i = 0; i < 4; i++) {
+//
+//                    if (strings[i] == null)
+//                        continue;
+//                    else {
+//                        if (g > 1) {
+//                            rs.append(",").append(strings[i]);
+//                            g = g + 1;
+//                        }
+//                        if (g > 2) {
+//                            rs.append(" and").append(strings[i]).append(" exist");
+//                            break;
+//                        } else {
+//                            rs.append(strings[i]);
+//                            g = g + 1;
+//                        }
+//                    }
+//                }
+//                break;
+//            case 4:
+//                rs.append(strings[0]).append(",")
+//                        .append(strings[1])
+//                        .append(",")
+//                        .append(strings[2])
+//                        .append(" and ")
+//                        .append(strings[3] + " exist");
+//                break;
+//            default:
+//                outcome = true;
+//
+//        }
+//
+//        return outcome ? ApiResult.successResponse("successfully saved")
+//                : ApiResult.errorResponse(rs.toString(), RestConstants.ACCESS_DENIED);
     }
 
     @Override
