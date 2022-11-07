@@ -107,7 +107,8 @@ public class ProductServiceImpl implements ProductService {
     public ApiResult<String> updateExistProduct(Long id, ProductDTO productDTO) {
         Product optionalProduct = productRepository.findById(id).get();
         Product product2 = serviceMapper.mapToProduct(productDTO);
-        if (!(optionalProduct == null)) {
+        if (!(optionalProduct == null))
+        {
             optionalProduct.setBookName(product2.getBookName());
             optionalProduct.setAudio_price(product2.getAudio_price());
             optionalProduct.setProductAuthor(product2.getProductAuthor());
@@ -118,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
             optionalProduct.setLanguage(product2.getLanguage());
             optionalProduct.setPrinted_Price(product2.getPrinted_Price());
             productRepository.save(optionalProduct);
-            return new ApiResult<>("This product has succesfully saved");
+            return new ApiResult<>("This product has successfully saved");
         } else {
             return new ApiResult<>("This product does not ex\n" +
                     "    }ist");
