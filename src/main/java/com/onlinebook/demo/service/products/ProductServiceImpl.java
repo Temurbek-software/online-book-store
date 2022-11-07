@@ -105,7 +105,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ApiResult<String> updateExistProduct(Long id, ProductDTO productDTO) {
-        Product optionalProduct = productRepository.findById(id).get();
+        Product optionalProduct = productRepository.getById(id);
         Product product2 = serviceMapper.mapToProduct(productDTO);
         if (!(optionalProduct == null))
         {
