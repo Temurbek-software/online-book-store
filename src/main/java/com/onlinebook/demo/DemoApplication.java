@@ -6,7 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "demoapplication",description = "online-book"))
+@OpenAPIDefinition(info = @Info(title = "online-book",description = "System work for " +
+        "selling and delivering books "))
 public class DemoApplication
 {
     public static void main(String[] args)
