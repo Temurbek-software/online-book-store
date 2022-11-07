@@ -35,6 +35,7 @@ public interface ServiceMapper {
     @Mapping(target = "deleted",ignore = true)//deleted, createdAt, updatedAt,
     @Mapping(target = "createdAt",ignore = true)//deleted, createdAt, updatedAt,
     @Mapping(target = "updatedAt",ignore = true)//deleted, createdAt, updatedAt,
+    @Mapping(target = "id",ignore = true)//deleted, createdAt, updatedAt,
     Product mapToProduct(ProductDTO productDTO);
     Author mapToAuthorDTO(AuthorDTO authorDTO);
 
